@@ -138,23 +138,8 @@ talking about models with <b>600 to 700 billion parameters</b>.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Though a
 2-billion-parameter model is small, it still requires 4 to 8 GB of memory.</span></p>
 
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>1. Using
-float32 (4 bytes per parameter):</span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2,000,000,000
-parameters × 4 bytes = 8,000,000,000 bytes = <b>8 GB</b></span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2. Using
-float16 (2 bytes per parameter): </span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2,000,000,000
-× 2 bytes = 4,000,000,000 bytes = <b>4 GB</b></span></p>
-
-<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+<p class=MsoNormal><img border=0 width=1099 height=239
+src="doc_files/image001.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>In order to
 run bigger models on our machines, we use a solution called <b>quantization</b>,
@@ -192,25 +177,15 @@ of the original memory</span></b><span style='font-size:14.0pt;line-height:
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>After
 quantizing a 2-billion-parameter model (using integers):</span></p>
 
-<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%'>Using
-int8 (1 byte):</span></b></p>
+<p class=MsoNormal><img border=0 width=928 height=180
+src="doc_files/image002.png"></p>
 
 <ul style='margin-top:0in' type=disc>
- <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2B × 1
-     byte = <b>2 GB</b></span></li>
-</ul>
-
-<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%'>Using
-int4 (0.5 byte):</span></b></p>
-
-<ul style='margin-top:0in' type=disc>
- <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2B × 0.5
-     byte = <b>1 GB</b></span></li>
  <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></li>
 </ul>
 
 <p class=MsoNormal><img border=0 width=1467 height=744
-src="doc_files/image001.jpg"></p>
+src="doc_files/image003.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
@@ -227,7 +202,7 @@ available.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1465 height=655
-src="doc_files/image002.jpg"></p>
+src="doc_files/image004.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 2</span></p>
 
@@ -290,7 +265,7 @@ Calculation for 27 Billion Parameters</span></p>
   locally.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1410 height=553
-  src="doc_files/image003.jpg"></p>
+  src="doc_files/image005.jpg"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -310,7 +285,7 @@ Calculation for 27 Billion Parameters</span></p>
   versions that we can run locally.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1304 height=788
-  src="doc_files/image004.png"></p>
+  src="doc_files/image006.png"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -327,7 +302,7 @@ Calculation for 27 Billion Parameters</span></p>
   have the same number of parameters. </span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1360 height=562
-  src="doc_files/image005.jpg"></p>
+  src="doc_files/image007.jpg"></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 5</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Originally,
@@ -338,7 +313,7 @@ Calculation for 27 Billion Parameters</span></p>
   associated with quantized models.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We should
   have a GPU capable of running the model, along with enough VRAM to load the
-  quantized parameters. However, if we don’t have a suitable GPU, that's okay</span></p>
+  quantized parameters. However, if we don't have a suitable GPU, that's okay</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>in this
   case, the CPU and regular system RAM can also handle the model, though it
   will run more slowly.</span></p>
@@ -348,7 +323,7 @@ Calculation for 27 Billion Parameters</span></p>
   hardware profile.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1400 height=681
-  src="doc_files/image006.jpg"></p>
+  src="doc_files/image008.jpg"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -364,7 +339,7 @@ Calculation for 27 Billion Parameters</span></p>
   Settings.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1496 height=797
-  src="doc_files/image007.jpg"></p>
+  src="doc_files/image009.jpg"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -396,7 +371,7 @@ Calculation for 27 Billion Parameters</span></p>
   end.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1484 height=618
-  src="doc_files/image008.jpg"></p>
+  src="doc_files/image010.jpg"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -412,7 +387,7 @@ Calculation for 27 Billion Parameters</span></p>
   back to the quantized model, you'll see the hardware profile I shared.</span></p>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
   <p class=MsoNormal><img border=0 width=1409 height=442
-  src="doc_files/image009.jpg"></p>
+  src="doc_files/image011.jpg"></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
@@ -442,7 +417,7 @@ says that the model is probably too large for my hardware.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1416 height=562
-src="doc_files/image010.jpg"></p>
+src="doc_files/image012.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 10</span></p>
 
@@ -454,7 +429,7 @@ model is likely to run on your hardware.&quot;</i></span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1434 height=595
-src="doc_files/image011.jpg"></p>
+src="doc_files/image013.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 11</span></p>
 
@@ -465,7 +440,7 @@ Studio in our case) you plan to use.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1402 height=621 id="Picture 1"
-src="doc_files/image012.jpg"></p>
+src="doc_files/image014.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 12</span></p>
 
@@ -481,7 +456,7 @@ running and working with open models locally on your system.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1275 height=696 id="Picture 2"
-src="doc_files/image013.jpg"></p>
+src="doc_files/image015.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 13</span></p>
 
@@ -496,7 +471,7 @@ hardware parameters, and downloaded it.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1327 height=606 id="Picture 3"
-src="doc_files/image014.jpg"></p>
+src="doc_files/image016.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 14</span></p>
 
@@ -510,7 +485,7 @@ Studio interface is very intuitive. Let's explore some features.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1284 height=501 id="Picture 4"
-src="doc_files/image015.png"></p>
+src="doc_files/image017.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 15</span></p>
 
@@ -521,7 +496,7 @@ you.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1249 height=806 id="Picture 5"
-src="doc_files/image016.png"></p>
+src="doc_files/image018.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 16</span></p>
 
@@ -531,7 +506,7 @@ is Donald Trump?' and expecting a response in a funny way.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1271 height=658 id="Picture 6"
-src="doc_files/image017.jpg"></p>
+src="doc_files/image019.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 17</span></p>
 
@@ -541,7 +516,7 @@ answer when the system prompt was removed.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1325 height=771 id="Picture 7"
-src="doc_files/image018.png"></p>
+src="doc_files/image020.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 18</span></p>
 
@@ -553,7 +528,7 @@ it when generating new responses.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1186 height=798 id="Picture 8"
-src="doc_files/image019.png"></p>
+src="doc_files/image021.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 19</span></p>
 
@@ -573,7 +548,7 @@ stored as an AI message.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1371 height=688 id="Picture 9"
-src="doc_files/image020.jpg"></p>
+src="doc_files/image022.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 20</span></p>
 
@@ -588,7 +563,7 @@ file, and more</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1380 height=643 id="Picture 10"
-src="doc_files/image021.jpg"></p>
+src="doc_files/image023.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 21</span></p>
 
@@ -604,7 +579,7 @@ connecting to.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1407 height=642 id="Picture 11"
-src="doc_files/image022.jpg"></p>
+src="doc_files/image024.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 22</span></p>
 
@@ -615,7 +590,7 @@ the LM Studio server running locally.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1444 height=761 id="Picture 12"
-src="doc_files/image023.png"></p>
+src="doc_files/image025.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 23</span></p>
 
@@ -630,7 +605,7 @@ providers have adopted it. </span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1452 height=596 id="Picture 13"
-src="doc_files/image024.jpg"></p>
+src="doc_files/image026.jpg"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 24</span></p>
 
@@ -651,7 +626,7 @@ OpenAI SDK.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1303 height=796 id="Picture 14"
-src="doc_files/image025.png"></p>
+src="doc_files/image027.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 25</span></p>
 
@@ -661,7 +636,7 @@ to upload an image (not a file) and asked it to describe the image, it crashed.<
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1385 height=736 id="Picture 15"
-src="doc_files/image026.png"></p>
+src="doc_files/image028.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 26</span></p>
 
@@ -672,7 +647,7 @@ tried enabling the option shown in the picture, but the problem persisted.</span
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1423 height=667 id="Picture 16"
-src="doc_files/image027.png"></p>
+src="doc_files/image029.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 27</span></p>
 
@@ -682,7 +657,7 @@ turning the option off to run the model only on the CPU.</span></p>
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal><img border=0 width=1237 height=836 id="Picture 17"
-src="doc_files/image028.png"></p>
+src="doc_files/image030.png"></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 28</span></p>
 
