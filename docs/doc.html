@@ -1,0 +1,712 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link="#0563C1" vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:115%'>Running the Multimodal AI Chat App with
+LM Studio Using a Locally Loaded Model.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Video Link: <a
+href="https://youtu.be/DW75yo6W710" target="_blank">https://youtu.be/DW75yo6W710</a></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>GitHub
+Repository: <a href="https://github.com/Ashot72/LM-Studio-local-chat-app"
+target="_blank">https://github.com/Ashot72/LM-Studio-local-chat-app</a></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We would
+like to explore how to run large language models (LLMs) locally on our
+machines, such as our laptops. If we don’t have a supercomputer at home, then </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>we need to
+find a way to run them efficiently. We can achieve this with the help of
+quantization, which allows us to run large models on smaller machines by </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>lowering
+hardware requirements without impacting the performance.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>The training
+of models should be executed on GPUs because they can perform many calculations
+in parallel, which is essential for producing results efficiently. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>GPUs are
+excellent at handling parallel computations. A CPU, on the other hand, can
+switch between different tasks but processes them sequentially, one after
+another.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>In addition
+to a GPU or CPU, we also need enough RAM or video RAM (VRAM). VRAM is the
+memory directly attached to the GPU. When we have a GPU, it </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>typically
+comes with VRAM, which allows faster and more direct access compared to regular
+system memory.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>When we use
+a model, all its parameters (weights), as well as the context window, which
+essentially includes the chat history, your input messages, </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>and the
+model’s output messages, must be loaded into memory and remain there during
+execution.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>When we
+don't have a lot of memory, we won't be able to load larger models. However, we
+can still run smaller models, and we'll also explore ways to reduce </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>the hardware
+requirements of larger models so they can run on regular laptops, especially
+high-end ones.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>An LLM
+(Large Language Model) is, at its core, a neural network trained using a
+specific algorithm. As a result of the training process, the model ends up with
+billions of parameters</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>because
+there are billions of connections. Each connection has an associated parameter,
+or weight, which determines how a value is transformed as it passes through
+different nodes in the network.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Each
+parameter is typically a float32 or float16 value after the initial training
+process. A float32 (32-bit floating point) uses <b>four bytes</b> per parameter
+and provides higher precision</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>it can store
+longer decimal numbers. A float16 (16-bit floating point) uses <b>two bytes</b>
+per parameter and is less precise. You can imagine that a 2-billion-parameter
+model is actually quite small. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We're now
+talking about models with <b>600 to 700 billion parameters</b>.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Though a
+2-billion-parameter model is small, it still requires 4 to 8 GB of memory.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>1. Using
+float32 (4 bytes per parameter):</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2,000,000,000
+parameters × 4 bytes = 8,000,000,000 bytes = <b>8 GB</b></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2. Using
+float16 (2 bytes per parameter): </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2,000,000,000
+× 2 bytes = 4,000,000,000 bytes = <b>4 GB</b></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>In order to
+run bigger models on our machines, we use a solution called <b>quantization</b>,
+which helps reduce memory requirements.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Quantization
+is essentially a compression mechanism. Originally trained models take up a lot
+of memory, but through a mathematical process, their parameter values are
+transformed into less precise </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>numbers.
+Instead of using float32 or float16, the values are typically converted to int8
+or int4 which are integer types, meaning they don't store decimal places.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>The great
+news is that the quantization algorithms used for this transformation are so
+effective that the model's performance its quality and accuracy</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>is
+essentially unchanged. <i>We get the best of both worlds: a model that performs
+well but takes up significantly less space and memory than the original
+version.</i></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>With
+quantization, we're talking about using <b>half a byte (int4) or one byte
+(int8)</b> per parameter instead of <b>two (float16) or four (float32)</b>.
+This means we essentially need around </span></p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%'>one-fourth
+of the original memory</span></b><span style='font-size:14.0pt;line-height:
+115%'> that the uncompressed model would have required.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>After
+quantizing a 2-billion-parameter model (using integers):</span></p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%'>Using
+int8 (1 byte):</span></b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2B × 1
+     byte = <b>2 GB</b></span></li>
+</ul>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%'>Using
+int4 (0.5 byte):</span></b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>2B × 0.5
+     byte = <b>1 GB</b></span></li>
+ <li class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></li>
+</ul>
+
+<p class=MsoNormal><img border=0 width=1467 height=744
+src="doc_files/image001.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 1</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>If we go to
+the </span><a href="https://huggingface.co/models" target="_blank"><b><span
+style='font-size:14.0pt;line-height:115%'>Hugging Face</span></b></a><span
+style='font-size:14.0pt;line-height:115%'> website, we can see many models
+available.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1465 height=655
+src="doc_files/image002.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 2</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>This is the
+original, non-quantized Google model <b>Gemma-3-27B-IT</b>, which has 27
+billion parameters.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Memory
+Calculation for 27 Billion Parameters</span></p>
+
+<table class=MsoNormalTable border=0 cellpadding=0>
+ <thead>
+  <tr>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Data Type                
+   Bytes per Parameter         Total Memory Needed</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>float32
+   (32-bit)       4 bytes                                27B × 4 = 108 GB</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>float16
+   (16-bit)       2 bytes                                27B × 2 = 54 GB</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>int8
+   (8-bit)               1 byte                                  27B × 1 = 27
+   GB</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>int4
+   (4-bit)              0.5 byte                               27B × 0.5 = 13.5
+   GB</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>So,
+   quantization can reduce memory usage drastically—from <b>108 GB</b> with
+   float32 down to as little as <b>13.5 GB</b> with int4.</span></p>
+   </td>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+   </td>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We do not
+  use raw models found on Hugging Face, and if you click the “Use this model”
+  option, you won’t see any local deployment options because these models are
+  not prepared to be </span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>executed
+  locally.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1410 height=553
+  src="doc_files/image003.jpg"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 3</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>If we
+  scroll down a bit, we’ll see some derivatives based on this model. For
+  example, fine-tuned versions that may perform better at certain tasks, and very
+  importantly</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>quantized
+  versions that we can run locally.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1304 height=788
+  src="doc_files/image004.png"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 4</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>If you
+  click on the <b>Quantization</b> link, you’ll find quantized versions that
+  have the same number of parameters. </span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1360 height=562
+  src="doc_files/image005.jpg"></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 5</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Originally,
+  the parameters were stored as float16 values. Now, with quantization, the
+  model uses 4-bit integers and requires about <b>17.2 GB</b> of memory.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>It is also
+  worth noting that the <b>GGUF</b> file type is used, which is typically
+  associated with quantized models.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We should
+  have a GPU capable of running the model, along with enough VRAM to load the
+  quantized parameters. However, if we don’t have a suitable GPU, that’s okay</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>in this
+  case, the CPU and regular system RAM can also handle the model, though it
+  will run more slowly.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Because
+  not all open models can run on every machine even with quantization the great
+  thing is that on Hugging Face, we can create a free account and share our
+  hardware profile.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1400 height=681
+  src="doc_files/image006.jpg"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 6</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Go to the
+  Settings.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1496 height=797
+  src="doc_files/image007.jpg"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 7</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Under <b>Local
+  Apps and Hardware</b>, we can share our hardware profile. In my case, my GPU
+  is an <b>NVIDIA GTX 1650 Mobile</b> with <b>4 GB of VRAM</b>, and my <b>Intel
+  i7 CPU</b> has <b>16 GB of RAM</b>.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>It tells
+  us whether our hardware is good or not, and as you can see, I’m on the lower
+  end.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1484 height=618
+  src="doc_files/image008.jpg"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 8</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>If we go
+  back to the quantized model, you’ll see the hardware profile I shared.</span></p>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  <p class=MsoNormal><img border=0 width=1409 height=442
+  src="doc_files/image009.jpg"></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 9</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>The tooltip
+says that the model is probably too large for my hardware.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1416 height=562
+src="doc_files/image010.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 10</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>For that
+reason, I will use a smaller model (4-bit) with <b>3.88 billion parameters</b>
+that requires <b>2.36 GB of memory</b>. In this case, it says: <i>&quot;The
+model is likely to run on your hardware.&quot;</i></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1434 height=595
+src="doc_files/image011.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 11</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>You should
+also make sure that the selected model is supported by the local app, (LM
+Studio in our case) you plan to use.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1402 height=621 id="Picture 1"
+src="doc_files/image012.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 12</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Navigate to </span><a
+href="https://lmstudio.ai/" target="_new"><span style='font-size:14.0pt;
+line-height:115%'>https://lmstudio.ai/</span></a><span style='font-size:14.0pt;
+line-height:115%'> and download LM Studio for your operating system.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>LM Studio is
+an amazing application that provides a great, user-friendly interface for
+running and working with open models locally on your system.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1275 height=696 id="Picture 2"
+src="doc_files/image013.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 13</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>From the
+video, you can see that LM Studio also shows whether a selected model is too
+large for your machine. I simply searched for the model I had checked on
+Hugging Face, </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>shared my
+hardware parameters, and downloaded it.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1327 height=606 id="Picture 3"
+src="doc_files/image014.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 14</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>You can
+download several models such as Gemma, DeepSeek, and Croc and load the one
+you'd like to work with.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>The LM
+Studio interface is very intuitive. Let's explore some features.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1284 height=501 id="Picture 4"
+src="doc_files/image015.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 15</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>You can add
+a system prompt, and the LLM will take it into consideration when answering
+you.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1249 height=806 id="Picture 5"
+src="doc_files/image016.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 16</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Asking 'Who
+is Donald Trump?' and expecting a response in a funny way.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1271 height=658 id="Picture 6"
+src="doc_files/image017.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 17</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>This is the
+answer when the system prompt was removed.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1325 height=771 id="Picture 7"
+src="doc_files/image018.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 18</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>You can
+regenerate the response, continue if it was suspended or cut off, or edit it.
+Your edited response will remain in the chat history, and the LLM will consider
+it when generating new responses.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1186 height=798 id="Picture 8"
+src="doc_files/image019.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 19</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We may want
+to simulate a certain AI response and artificially create a chat history that
+never actually happened. We can do this by switching the roles. For example, we
+can start </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>with an
+Assistant message like 'Hi, ...' to simulate an AI response that didn't occur
+naturally. The LLM will still generate a reply as if a regular user sent the
+message, but internally, it </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>will be
+stored as an AI message.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1371 height=688 id="Picture 9"
+src="doc_files/image020.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 20</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>When you
+select a model, you can see whether it supports multimodal input, such as
+images or files. If it does, you can upload a file and ask questions about it,
+such as summarizing information </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>from the
+file, and more</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1380 height=643 id="Picture 10"
+src="doc_files/image021.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 21</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>With LM
+Studio, we can use it programmatically. We can build our own applications that
+rely on locally running models, without having to pay for access to a
+proprietary model’s API.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>We can
+enable the LM Studio server in developer view to see the local host we are
+connecting to.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1407 height=642 id="Picture 11"
+src="doc_files/image022.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 22</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>You can see
+that I was able to send a message from Postman and receive a response back from
+the LM Studio server running locally.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1444 height=761 id="Picture 12"
+src="doc_files/image023.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 23</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>One of the
+great things about these locally running tools is that, besides their own API,
+they support the OpenAI SDK, which has become the de facto standard for
+interacting with LLM APIs. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Many other
+providers have adopted it. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1452 height=596 id="Picture 13"
+src="doc_files/image024.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 24</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>I previously
+created a multimodal chat application that connected to OpenAI to use their
+LLM. To make the same app work with a local LLM, I changed only two things, nothing
+else. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>I updated
+the <i>baseURL</i> to point to the local server (just the base URL, not the
+full completion path like in Postman) and specified the <i>model’s</i> name.
+There's no need for an OpenAI API </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>key since
+everything runs locally. It works because the LM Studio server supports the
+OpenAI SDK.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1303 height=796 id="Picture 14"
+src="doc_files/image025.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 25</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>When I tried
+to upload an image (not a file) and asked it to describe the image, it crashed.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1385 height=736 id="Picture 15"
+src="doc_files/image026.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 26</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>The issue
+seems to be related to my VRAM, as processing the image requires more memory. I
+tried enabling the option shown in the picture, but the problem persisted.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1423 height=667 id="Picture 16"
+src="doc_files/image027.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 27</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>I tried
+turning the option off to run the model only on the CPU.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1237 height=836 id="Picture 17"
+src="doc_files/image028.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Figure 28</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>Now I can
+see the result, but it takes minutes to process the response on the CPU.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:115%'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:115%'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
