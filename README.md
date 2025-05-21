@@ -1,5 +1,5 @@
 # Running the Multimodal AI Chat App with LM Studio using a locally loaded model
-I explore how to run large language models (LLMs) locally on your machine—such as a high-end notebook—using LM Studio. You'll see how to select a quantized model that’s compatible with your hardware and discover how easy it is to use LM Studio with local models like Gemma, DeepSeek, Croc, and others. The process requires only beginner-level experience.
+I explore how to run large language models (LLMs) locally on your machine—such as a high-end notebook—using LM Studio. You'll see how to select a quantized model that’s compatible with your hardware and discover how easy it is to use LM Studio with local models like Gemma, DeepSeek, Llama, and others. The process requires only beginner-level experience.
 
 Running models locally is ideal when you want to keep your data private, avoid subscription costs, and continue working while traveling—even on airplanes without an internet connection.
 
