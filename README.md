@@ -9,7 +9,6 @@ One of the great advantages of locally running tools like LM Studio is that, in 
 
 To show how it works, I used the Google Gemma small model. I shared my hardware profile on Hugging Face to make sure it would run. It wasn’t super fast, but it worked well enough to demonstrate the app.
 
-Supervisor Agent determines which agent to use and routes the user prompt accordingly.
 
 To get started.
 ```
@@ -31,6 +30,7 @@ To get started.
          npm start
     
 ```
+
 
 Go to [LM Studio Video](https://youtu.be/DW75yo6W710) page
 
